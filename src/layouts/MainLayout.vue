@@ -47,11 +47,17 @@ const linksList = [
     icon: "fa-solid fa-cube",
     to: "/components"
   },
-   {
+  {
     title: 'List Shopping Siipi',
     caption: 'This is a Lists Shopping',
     icon: "fact_check",
     to: "/listShopping"
+  },
+  {
+    title: 'ProductList',
+    caption: 'Product Page',
+    icon: "rocket_launch",
+    to: "/listProduct"
   }
 
 ]
