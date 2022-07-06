@@ -58,7 +58,14 @@ const linksList = [
     caption: 'Product Page',
     icon: "rocket_launch",
     to: "/listProduct"
+  },
+   {
+    title: 'WareHouse',
+    caption: 'warehouse Siipi',
+    icon: "warehouse",
+    to: "/indexWarehouse"
   }
+
 
 ]
 
