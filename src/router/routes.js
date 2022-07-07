@@ -10,7 +10,10 @@ const routes = [
       { path: '/listShopping', component: () => import('pages/ListShopping.vue') },
       { path: '/listProduct', component: () => import('pages/ProductSiipi.vue') },
       { path: '/indexWarehouse', component: () => import('pages/warehouse/IndexWarehouse.vue') },
-      { path: '/siipiProduct', component: () => import('pages/warehouse/SiipiProduct.vue') }
+      { path: '/siipiProduct', component: () => import('pages/warehouse/SiipiProduct.vue') },
+      { path: '/provaiderSiipi', component: () => import('pages/warehouse/ProvaiderSiipi.vue') },
+      { path: '/entryProduct', component: () => import('pages/warehouse/EntryProduct.vue') },
+      { path: '/outputProduct', component: () => import('pages/warehouse/OutputProduct.vue') }
 
     ]
   },

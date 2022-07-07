@@ -18,7 +18,7 @@
 
 
                 <q-card-actions align="around">
-                    <q-btn flat icon="visibility" to="'/siipiProduct">Ingresar</q-btn>
+                    <q-btn flat  icon="visibility" to="'/siipiProduct">Ingresar</q-btn>
                 </q-card-actions>
             </q-card>
 
@@ -32,12 +32,12 @@
 
 
                 <q-card-actions align="around">
-                    <q-btn flat icon="visibility">Ingresar</q-btn>
+                    <q-btn flat icon="visibility" to="/provaiderSiipi">Ingresar</q-btn>
                 </q-card-actions>
             </q-card>
 
 
-            <div class="col-xs-12 col-md-6"></div>
+           
 
         </div>
 
@@ -53,7 +53,7 @@
 
 
                 <q-card-actions align="around">
-                    <q-btn flat icon="visibility">Ingresar</q-btn>
+                    <q-btn flat icon="visibility" to="/entryProduct">Ingresar</q-btn>
                 </q-card-actions>
             </q-card>
 
@@ -67,10 +67,31 @@
 
 
                 <q-card-actions align="around">
-                    <q-btn flat icon="visibility">Ingresar</q-btn>
+                    <q-btn flat icon="visibility" to="/outputProduct">Ingresar</q-btn>
                 </q-card-actions>
             </q-card>
 
+            
+
+        </div>
+
+         <div class="q-pa-md row items-start q-gutter-md justify-around">
+
+            <q-card class="my-card">
+                <q-card-section class="bg-amber-14 text-white">
+                    <div class="text-h6">INVENtARIO</div>
+                    <div class="text-subtitle2">INVENTARIO SIIPI</div>
+                    <q-icon size="32px" name="inventory" />
+
+                </q-card-section>
+
+
+                <q-card-actions align="around">
+                    <q-btn flat icon="visibility" to="'/siipiProduct">Ingresar</q-btn>
+                </q-card-actions>
+            </q-card>
+
+        
         </div>
 
 
