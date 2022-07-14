@@ -64,6 +64,18 @@ const linksList = [
     caption: 'warehouse Siipi',
     icon: "warehouse",
     to: "/indexWarehouse"
+  },
+   {
+    title: 'Subir Productos Con Excel',
+    caption: 'test for excel upload product',
+    icon: "file_upload",
+    to: "/uploadProduct"
+  },
+   {
+    title: 'Productos Siipi',
+    caption: 'Productos de Pruebas',
+    icon: "menu_book",
+    to: "/productSiipi"
   }
 
 

@@ -1,6 +1,6 @@
 <template>
 
-    <q-page :style-fn="myTweak" padding >
+    <q-page  padding >
 
         <div class="header">
             <h5>{{ titulo }}</h5>

@@ -7,8 +7,9 @@
           <h6 class="q-my-none col-6">ENTRADAS DE PRODUCTOS</h6>
           <q-btn color="primary" icon="redeem" label="Add Entry" no-caps @click="(editing = true),
           (modify = false),
-          (newItem = ''),
-          (phone = '')" v-if="!editing" />
+          (receivedBy = ''),
+          (product = '')
+                           " v-if="!editing" />
           <q-btn color="negative" icon="cancel" label="Finish" @click="(editing = false)" v-else />
 
 
@@ -18,9 +19,9 @@
 
           <q-input v-model="receivedBy" type="text" label="Recibido por" filled />
 
-          <q-select v-model="product" :options="options" label="Producto" filled />
+          <q-input v-model="product" type="text" label="Product" filled />
 
-          <q-select v-model="provaider" :options="options2" label="Proveedor" filled />
+          <q-input v-model="provaider" type="text" label="Proveedor" filled="" />
 
           <q-input outlined v-model="quantity" type="number" label="Cantidad" :hint="characterCount + '/40 caracteres'"
             filled />
@@ -32,6 +33,8 @@
           <q-select v-model="status" :options="options3" label="Estado de llegada del producto" filled />
 
           <q-input v-model="dateExpi" type="date" hint="Fecha de Vencimiento" filled />
+
+          <q-input v-model="dateEntry" type="date" hint="Fecha de Ingreos" filled />
 
 
 
@@ -44,9 +47,9 @@
         <q-form @submit="editItem(selectedItem)" class="q-gutter-md q-mx-none" v-if="modify">
           <q-input v-model="receivedBy" type="text" label="Recibido por" filled />
 
-          <q-select v-model="product" :options="options" label="Producto" filled />
+          <q-input v-model="product" type="text" label="Label" filled />
 
-          <q-select v-model="provaider" :options="options2" label="Proveedor" filled />
+          <q-input v-model="provaider" type="text" label="Label" filled />
 
           <q-input outlined v-model="quantity" type="number" label="Cantidad" :hint="characterCount + '/40 caracteres'"
             filled />
@@ -58,16 +61,18 @@
           <q-select v-model="status" :options="options3" label="Estado de llegada del producto" filled />
 
           <q-input v-model="dateExpi" type="date" hint="Fecha de Vencimiento" filled />
+
+           <q-input v-model="dateEntry" type="date" hint="Fecha de Ingreso" filled /> 
           <div>
             <q-btn label="Editar Proveedor" type="submit" color="primary" />
             <q-btn label="Volver" to="/indexWarehouse" color="secondary" class="q-ml-sm" />
           </div>
         </q-form>
 
-        <q-list bordered separator>
-          <q-item clickable v-ripple v-for="({ id, name, phone }, index) in reversedItems" :key="id">
-            <q-item-section>
-              {{ index + 1 }}. {{ name }} - {{ phone }}
+        <q-list bordered separator class="col-auto" >
+          <q-item clickable v-ripple v-for="({ id,receivedBy, product, provaider, quantity, priceBuy, priceSell, dateExpi, dateEntry }, index) in reversedItems" :key="id">
+            <q-item-section >
+              {{ index + 1 }}. {{ receivedBy }} - {{ product }} - {{ provaider }} - {{ quantity }} - {{ priceBuy }} - {{ priceSell }} - {{ dateExpi }} - {{ dateEntry }}
             </q-item-section>
             <q-item-section side>
               <q-btn flat round color="primary" icon="edit" @click="showEdit(reversedItems[index])" />
@@ -90,7 +95,7 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
-import { useQuasar, QSpinnerGears } from 'quasar'
+import { useQuasar, QSpinnerHourglass } from 'quasar'
 
 export default defineComponent({
   name: 'EntryProduct',
@@ -105,35 +110,54 @@ export default defineComponent({
     const priceSell = ref('');
     const status = ref('');
     const dateExpi = ref('');
+    const dateEntry = ref('');
     const editing = ref(false);
     const selectedItem = ref(null);
     const modify = ref(false);
-    const characterCount = computed(() => newItem.value.length);
+    const characterCount = computed(() => quantity.value.length);
     const reversedItems = computed(() => {
       return [...items.value].reverse();
     });
 
-    const options = ['Producto 1', 'Producto 2', 'Producto 3', 'Producto 4', 'Producto 5'];
+    const options3=["Buen Estado","Mal Estado", "Termino Medio "];
 
 
     const items = ref([{
       id: 1,
-      name: 'PIL',
-      phone: '70290124',
-      quantity: '10',
-      priceBuy: '10',
-      priceSell: '10',
-      status: 'Llegado',
-      dateExpi: '2020-01-01'
+      receivedBy: 'Marcelo Villanueva',
+      product: 'Aceite de Oliva',
+      provaider: 'Aceite Fino',
+      quantity: '100 unidades',
+      priceBuy: '10Bs',
+      priceSell: '15Bs',
+      status: 'En buen estado',
+      dateExpi: '2024-01-01',
+      dateEntry: '2022-07-08'
 
     }, {
       id: 2,
-      name: 'COIMSA',
-      phone: '60964458'
+      receivedBy: 'Tatiana',
+      product: 'Leche Deslactosada',
+      provaider: 'Pil',
+      quantity: '200 unidades',
+      priceBuy: '6Bs',
+      priceSell: '10Bs',
+      status: 'En buen estado',
+      dateExpi: '2022-12-12',
+      dateEntry: '2022-07-08'
+
+      
     }, {
       id: 3,
-      name: 'GRUPO VENADO',
-      phone: '60904477'
+      receivedBy: 'Jorge Rivera',
+      product: 'Harina Integral',
+      provaider: 'Don Luis',
+      quantity: '40 quintales',
+      priceBuy: '170Bs',
+      priceSell: '0',
+      status: 'En buen estado',
+      dateExpi: '2022-12-12',
+      dateEntry: '2022-07-08'
 
     }]);
 
@@ -141,19 +165,41 @@ export default defineComponent({
     const addItem = () => {
       items.value.push({
         id: items.value.length + 1,
-        name: newItem.value,
-        phone: phone.value,
+        receivedBy: receivedBy.value,
+        product: product.value,
+        provaider: provaider.value,
+        quantity: quantity.value,
+        priceBuy: priceBuy.value,
+        priceSell: priceSell.value,
+        status: status.value,
+        dateExpi: dateExpi.value,
+        dateEntry: dateEntry.value
+
       });
-      newItem.value = '';
-      phone.value = '';
+      receivedBy.value = '';
+      product.value = '';
+      provaider.value = '';
+      quantity.value = '';
+      priceBuy.value = '';
+      priceSell.value = '';
+      status.value = '';
+      dateExpi.value = '';
+      dateEntry.value = '';
     };
 
     const showEdit = (item) => {
       selectedItem.value = item;
       modify.value = true;
       editing.value = true;
-      newItem.value = item.name;
-      phone.value = item.phone;
+      receivedBy.value = item.receivedBy;
+      product.value = item.product;
+      provaider.value = item.provaider;
+      quantity.value = item.quantity;
+      priceBuy.value = item.priceBuy;
+      priceSell.value = item.priceSell;
+      status.value = item.status;
+      dateExpi.value = item.dateExpi;
+      dateEntry.value = item.dateEntry;
     };
 
     const editItem = () => {
@@ -161,8 +207,16 @@ export default defineComponent({
       selectedItem.value.phone = phone.value;
       modify.value = true;
       editing.value = false;
-      newItem.value = '';
-      phone.value = '';
+      receivedBy.value = '';
+      product.value = '';
+      provaider.value = '';
+      quantity.value = '';
+      priceBuy.value = '';
+      priceSell.value = '';
+      status.value = '';
+      dateExpi.value = '';
+      dateEntry.value = '';
+      
     };
 
 
@@ -178,7 +232,7 @@ export default defineComponent({
         .onOk(() => {
           items.value = items.value.filter((i) => i.id !== item.id);
           $q.notify({
-            spinner: QSpinnerGears,
+            spinner: QSpinnerHourglass,
             message: "Se elimino correctamente...",
             timeout: 2000,
             color: "positive",
@@ -194,10 +248,16 @@ export default defineComponent({
     };
 
     return {
-      newItem,
+      receivedBy,
+      product,
+      provaider,
+      quantity,
+      priceBuy,
+      priceSell,
+      status,
+      dateExpi,
+      dateEntry,
       editing,
-      items,
-      phone,
       addItem,
       characterCount,
       reversedItems,
@@ -206,6 +266,7 @@ export default defineComponent({
       modify,
       editItem,
       deleteItem,
+      options3  
 
 
 
